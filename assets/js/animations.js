@@ -1,82 +1,146 @@
-//	Animations v1.4, Copyright 2014, Joe Mottershaw, https://github.com/joemottershaw/
-//	==================================================================================
+//	Animations 2.0, Copyright 2014, Joe Mottershaw, https://github.com/joemottershaw/
+//	=================================================================================
 
-	// Animate
-		function animateElement() {
-			if ($(window).width() >= 960) {
-				$('.animate').each(function(i, elem) {
-					var	elem = $(elem),
-						type = $(this).attr('data-anim-type'),
-						delay = $(this).attr('data-anim-delay');
-
-					if (elem.visible(true)) {
-						setTimeout(function() {
-							elem.addClass(type);
-						}, delay);
-					} 
-				});
-			} else {
-				$('.animate').each(function(i, elem) {
-					var	elem = $(elem),
-						type = $(this).attr('data-anim-type'),
-						delay = $(this).attr('data-anim-delay');
-
-						setTimeout(function() {
-							elem.addClass(type);
-						}, delay);
-				});
-			}
-		}
-
+	// Document ready
 		$(document).ready(function() {
-			if ($('html').hasClass('no-js'))
-				$('html').removeClass('no-js').addClass('js');
+			// Adjust no-js/js html class
+				if ($('html').hasClass('no-js'))
+					$('html').toggleClass('no-js js');
 
-			animateElement();
+			// Check window width
+				if ($(window).width() <= 568) {
+					// Clear animations
+						$('.animate-in').removeClass('animate-in animating animate-out infinite').removeClass(effects.join(' '));
+				} else {
+					// Animate element
+						$('.animate-in').each(function(i, elem) {
+							// Vars
+								var	type = $(elem).attr('data-anim-type'),
+									delay = $(elem).attr('data-anim-delay');
+
+							// Animate as element appears into viewport
+								$(elem).appear(function () {
+									// Animate
+										setTimeout(function() {
+											$(elem).addClass('animating').addClass(type).removeClass('animate-in');
+										}, delay);
+
+									// On animation end
+										$(elem).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+											// Clear animation
+												$(elem).removeClass('animating').removeClass(effects.join(' '));
+										});
+								}, { accX: 0, accY: -100 });
+						});
+				}
 		});
 
+	// Window resize
 		$(window).resize(function() {
-			animateElement();
+			// Check window width
+				if ($(window).width() <= 568)
+					// Clear animations
+						$('.animate-in').removeClass('animate-in animating animate-out infinite').removeClass(effects.join(' '));
 		});
 
-		$(window).scroll(function() {
-			animateElement();
-
-			if ($(window).scrollTop() + $(window).height() == $(document).height())
-				animateElement();
-		});
-
-	// Triggers
-		function randomClass() {
-			var	random = Math.ceil(Math.random() * classAmount)
-
-			return classesArray[random];
+	// Functions
+		function animate(elem, type, infinite) {
+			// Check type exists in effects array
+				if (effects.indexOf(type) != -1) {
+					if (!infinite) {
+						// Animate once
+							$(elem).removeClass('animate-in animate-out infinite').removeClass(effects.join(' ')).addClass('animating').addClass(type).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+								$(elem).removeClass('animating').removeClass(effects.join(' '));
+							});
+					} else {
+						// Animate infinitely
+							$(elem).removeClass('animate-in animate-out').removeClass(effects.join(' ')).addClass('animating infinite').addClass(type);
+					}
+				}
 		}
 
-		function animateOnce(target, type) {
-			if (type == 'random')
-				type = randomClass();
+		function animateOut(elem, type, remove) {
+			// Check type exists in effects array
+				if (effects.indexOf(type) != -1) {
+					// Animate
+						$(elem).removeClass('infinite').removeClass(effects.join(' ')).addClass('animating').addClass(type).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+							$(elem).addClass('animate-out').removeClass('animating').removeClass(effects.join(' '));
 
-			$(target).removeClass('trigger infinite ' + triggerClasses).addClass('trigger').addClass(type).one('webkitAnimationEnd oAnimationEnd MSAnimationEnd animationend', function() {
-				$(this).removeClass('trigger infinite ' + triggerClasses);
-			});
+							// Remove element
+								if (remove)
+									$(elem).remove();
+						});
+				}
 		}
 
-		function animateInfinite(target, type) {
-			if (type == 'random')
-				type = randomClass();
+		function animateEnd(elem, remove) {
+			// Clear animation
+				$(elem).removeClass('animating infinite').removeClass(effects.join(' '));
 
-			$(target).removeClass('trigger infinite ' + triggerClasses).addClass('trigger infinite').addClass(type).one('webkitAnimationEnd oAnimationEnd MSAnimationEnd animationend', function() {
-				$(this).removeClass('trigger infinite ' + triggerClasses);
-			});
+			// Remove element
+				if (remove)
+					$(elem).remove();
 		}
 
-		function animateEnd(target) {
-			$(target).removeClass('trigger infinite ' + triggerClasses);
-		}
+	// Animation effects
+		var effects	=	[
+							'fade-in',
+							'fade-in-up', 'fade-in-up-big', 'fade-in-up-large',
+							'fade-in-down', 'fade-in-down-big', 'fade-in-down-large',
+							'fade-in-left', 'fade-in-left-big', 'fade-in-left-large',
+							'fade-in-right', 'fade-in-right-big', 'fade-in-right-large',
 
-	// Variables
-		var	triggerClasses = 'flash strobe shakeH shakeV bounce tada wave spinCW spinCCW slingshotCW slingshotCCW wobble pulse pulsate heartbeat panic',
-			classesArray = new Array,
-			classesArray = triggerClasses.split(' '),
-			classAmount = classesArray.length;
+							'fade-out',
+							'fade-out-up', 'fade-out-up-big', 'fade-out-up-large',
+							'fade-out-down', 'fade-out-down-big', 'fade-out-down-large',
+							'fade-out-left', 'fade-out-left-big', 'fade-out-left-large',
+							'fade-out-right', 'fade-out-right-big', 'fade-out-right-large',
+							
+							'bounce-in', 'bounce-in-big', 'bounce-in-large',
+							'bounce-in-up', 'bounce-in-up-big', 'bounce-in-up-large',
+							'bounce-in-down', 'bounce-in-down-big', 'bounce-in-down-large',
+							'bounce-in-left', 'bounce-in-left-big', 'bounce-in-left-large',
+							'bounce-in-right', 'bounce-in-right-big', 'bounce-in-right-large',
+							
+							'bounce-out', 'bounce-out-big', 'bounce-out-large',
+							'bounce-out-up', 'bounce-out-up-big', 'bounce-out-up-large',
+							'bounce-out-down', 'bounce-out-down-big', 'bounce-out-down-large',
+							'bounce-out-left', 'bounce-out-left-big', 'bounce-out-left-large',
+							'bounce-out-right', 'bounce-out-right-big', 'bounce-out-right-large',
+							
+							'zoom-in',
+							'zoom-in-up', 'zoom-in-up-big', 'zoom-in-up-large',
+							'zoom-in-down', 'zoom-in-down-big', 'zoom-in-down-large',
+							'zoom-in-left', 'zoom-in-left-big', 'zoom-in-left-large',
+							'zoom-in-right','zoom-in-right-big', 'zoom-in-right-large',
+							
+							'zoom-out',
+							'zoom-out-up', 'zoom-out-up-big', 'zoom-out-up-large',
+							'zoom-out-down', 'zoom-out-down-big', 'zoom-out-down-large',
+							'zoom-out-left', 'zoom-out-left-big', 'zoom-out-left-large',
+							'zoom-out-right','zoom-out-right-big', 'zoom-out-right-large',
+							
+							'flip-in-x', 'flip-in-y',
+							'flip-in-top-front', 'flip-in-top-back', 
+							'flip-in-bottom-front', 'flip-in-bottom-back', 
+							'flip-in-left-front', 'flip-in-left-back', 
+							'flip-in-right-front', 'flip-in-right-back',
+							
+							'flip-out-x', 'flip-out-y',
+							'flip-out-top-front', 'flip-out-top-back', 
+							'flip-out-bottom-front', 'flip-out-bottom-back', 
+							'flip-out-left-front', 'flip-out-left-back', 
+							'flip-out-right-front', 'flip-out-right-back',
+
+							'flash', 'strobe',
+							'shake-x', 'shake-y',
+							'bounce',
+							'tada',
+							'rubber-band',
+							'swing',
+							'spin', 'spin-reverse',
+							'slingshot', 'slingshot-reverse',
+							'wobble',
+							'pulse', 'pulsate', 'heartbeat',
+							'panic'
+						];

@@ -1,7 +1,7 @@
-Animations v1.4
+Animations v2.0
 ===============
 
-A versatile CSS3 animation pack with various usages. Trigger CSS3 animations as elements enter the viewport, as you hover with a mouse or by binding them via JavaScript functions/event listeners.
+A versatile CSS3 animation pack with over 65 animations for various usages. Trigger CSS3 animations as elements enter the viewport, as you hover with a mouse or by binding them via JavaScript functions/event listeners.
 
 **Demo:** http://www.cloud-eight.com/github/animations/
 
@@ -11,7 +11,7 @@ Usage
 
 <ul>
   <li>Add the class `no-js` to your `html` tag</li>
-  <li>Link 'animations.min.css', 'animations.min.js' and 'visible.min.js' (TeamDF) to your document</li>
+  <li>Link 'animations.min.css', 'animations.min.js' and 'appear.min.js' to your document</li>
   <li>Follow the guides below depending on what aspect of the plugin you wish to use</li>
 </ul>
 
@@ -19,96 +19,64 @@ Usage
 Animations
 ==========
 
-The plugin will auto detect elements in view on page load, any other element assigned with the `animate` class and a `data-anim-type` attribute will be executed as it enters the viewport upon scrolling.
-
 <ul>
-  <li>Add the class `animate` to the desired element</li>
+  <li>Add the class `animate-in` to the desired element</li>
   <li>Add the attribute `data-anim-type` with an animation type listed below</li>
   <li>(Optional) Add the attribute `data-anim-delay` if you wish to put a delay (in ms) on the animation</li>
 </ul>
 
-```
-<div class="animate" data-anim-type="bounceIn" data-anim-delay="200">Bouncy Bouncy</div>
-```
+The plugin will auto detect elements in view on page load, any other elements assigned with the `animate-in` class will be executed as they enter the viewport upon scrolling.
 
-| Animation            | Class Name        |
-|:--------------------:|:-----------------:|
-| Fade In              | fadeIn            |
-| Fade In Up           | fadeInUp          |
-| Fade In Down         | fadeInDown        |
-| Fade In Left         | fadeInLeft        |
-| Fade In Right        | fadeInRight       |
-| Fade In Up Large     | fadeInUpLarge     |
-| Fade In Down Large   | fadeInDownLarge   |
-| Fade In Left Large   | fadeInLeftLarge   |
-| Fade In Right Large  | fadeInRightLarge  |
-| Fade Out             | fadeOut           |
-| Fade Out Up          | fadeOutUp         |
-| Fade Out Down        | fadeOutDown       |
-| Fade Out Left        | fadeOutLeft       |
-| Fade Out Right       | fadeOutRight      |
-| Fade Out Up Large    | fadeOutUpLarge    |
-| Fade Out Down Large  | fadeOutDownLarge  |
-| Fade Out Left Large  | fadeOutLeftLarge  |
-| Fade Out Right Large | fadeOutRightLarge |
-| Zoom In              | zoomIn            |
-| Zoom In Up           | zoomInUp          |
-| Zoom In Down         | zoomInDown        |
-| Zoom In Left         | zoomInLeft        |
-| Zoom In Right        | zoomInRight       |
-| Zoom In Up Large     | zoomInUpLarge     |
-| Zoom In Down Large   | zoomInDownLarge   |
-| Zoom In Left Large   | zoomInLeftLarge   |
-| Zoom In Right Large  | zoomInrightLarge  |
-| Zoom Out             | zoomOut           |
-| Zoom Out Up          | zoomOutUp         |
-| Zoom Out Down        | zoomOutDown       |
-| Zoom Out Left        | zoomOutLeft       |
-| Zoom Out Right       | zoomOutRight      |
-| Zoom Out Up Large    | zoomOutUpLarge    |
-| Zoom Out Down Large  | zoomOutDownLarge  |
-| Zoom Out Left Large  | zoomOutLeftLarge  |
-| Zoom Out Right Large | zoomOutRightLarge |
-| Bounce In            | bounceIn          |
-| Bounce In Up         | bounceInUp        |
-| Bounce In Down       | bounceInDown      |
-| Bounce In Left       | bounceInLeft      |
-| Bounce In Right      | bounceInRight     |
-| Bounce Out           | bounceOut         |
-| Bounce Out Up        | bounceOutUp       |
-| Bounce Out Down      | bounceOutDown     |
-| Bounce Out Left      | bounceOutLeft     |
-| Bounce Out Right     | bounceOutRight    |
-| Spin Left            | spinRight         |
-| Spin Right           | spinLeft          |
+```
+<div class="animate-in" data-anim-type="bounce-in-up" data-anim-delay="200">Bounce In Up</div>
+```
 
 By default, animation duration time/speed is 1 second, if you wish to adjust this duration you can add the class `slow-mo` (2 seconds), `super-slow-mo` (3 seconds), `ultra-slow-mo` (4 seconds) or `hyper-slow-mo` (5 seconds).
 
 ```
-<div class="animate slow-mo" data-anim-type="bounceIn" data-anim-delay="200">Bouncy Bouncy</div>
-<div class="animate super-slow-mo" data-anim-type="bounceIn" data-anim-delay="200">Bouncy Bouncy</div>
-<div class="animate ultra-slow-mo" data-anim-type="bounceIn" data-anim-delay="200">Bouncy Bouncy</div>
-<div class="animate hyper-slow-mo" data-anim-type="bounceIn" data-anim-delay="200">Bouncy Bouncy</div>
+<div class="animate-in slow-mo" data-anim-type="bounce-in-up" data-anim-delay="0">Slow Mo</div>
+<div class="animate-in super-slow-mo" data-anim-type="bounce-in-up" data-anim-delay="0">Super Slow Mo</div>
+<div class="animate-in ultra-slow-mo" data-anim-type="bounce-in-up" data-anim-delay="0">Ultra Slow Mo</div>
+<div class="animate-in hyper-slow-mo" data-anim-type="bounce-in-up" data-anim-delay="0">Hyper Slow Mo</div>
 ```
 
 
-Click and Hovers
-================
+Binding
+=======
 
-There are 2 types of predefined animated JavaScript functions, 1 that executes the animation once and another which loops continuously/infinitely.
-You can pass 2 variables into these functions and that is the ID/Class of the target element and what type of animation you want to execute.
+There are 3 JavaScript functions at your disposal `animate`, `animateOut` and `animateEnd`.
+
+To animate an element at any point you can use the `animate` function.
+The `animate` function needs 2 variables passed through it, the first being the ID/Class of the target element, the second is the type of animation.
+There is the optional 3rd variable to animate the element infinitely.
 Multiple elements can be targeted by seperating them with a comma.
 
 ```
-<button onclick="animateOnce('#element', 'wave');">Wave Once</button>
-<button onclick="animateInfinite('#element, #tagline', 'wave');">Wave Continuously</button>
+<button onclick="animate('#element', 'tada');">Tada Once</button>
+<button onclick="animate('#element, #tagline', 'tada', true);">Tada Continuously</button>
 ```
 
-To stop an element from animating you can use the `animateEnd` function and passing the element ID/Class.
+To animate an element out correctly you can use the `animateOut` function.
+The `animateOut` function needs 2 variables passed through it, the first being the ID/Class of the target element, the second is the type of animation.
+There is the optional 3rd variable to remove the element completely after it has animated.
 
 ```
-<button onclick="animateEnd('#element');">End Wave</button>
+<button onclick="animateOut('#element', 'bounce-out');">Bounce Out</button>
+<button onclick="animateOut('#element', 'bounce-out', true);">Bounce Out and Remove</button>
 ```
+
+To stop an element animation correctly you can use the `animateEnd` function.
+The `animateEnd` function only needs 1 variable passed through it, the ID/Class of the target element.
+There is the optional 2nd variable to remove the element completely.
+
+```
+<button onclick="animateEnd('#element');">End</button>
+<button onclick="animateEnd('#element'true);">End and Remove</button>
+```
+
+
+Hovers
+======
 
 You can also use the `hover-*` class to assign the animation to the `:hover` psuedo selector, adding the class `infinite` will continuously loop the animation while hovering.
 
@@ -116,24 +84,6 @@ You can also use the `hover-*` class to assign the animation to the `:hover` psu
 <button class="hover-spin">Spin Once</button>
 <button class="hover-spin infinite">Spin Continuously</button>
 ```
-
-| Animation  | Click | Class Name | Hover | Class Name      |
-|:----------:|:-----:|:----------:|:-----:|:---------------:|
-| Flash      | Yes   | flash      | Yes   | hover-flash     |
-| Strobe     | Yes   | strobe     | Yes   | hover-strobe    |
-| Shake      | Yes   | shake      | Yes   | hover-shake     |
-| Bounce     | Yes   | bounce     | Yes   | hover-bounce    |
-| Tada       | Yes   | tada       | Yes   | hover-tada      |
-| Wave       | Yes   | wave       | Yes   | hover-wave      |
-| Spin       | Yes   | spin       | Yes   | hover-spin      |
-| Pullback   | Yes   | pullback   | Yes   | hover-pullback  |
-| Wobble     | Yes   | wobble     | Yes   | hover-wobble    |
-| Pulse      | Yes   | pulse      | Yes   | hover-pulse     |
-| Pulsate    | Yes   | pulsate    | Yes   | hover-pulsate   |
-| Heartbeat  | Yes   | heartbeat  | Yes   | hover-heartbeat |
-| Panic      | Yes   | panic      | Yes   | hover-panic     |
-| Random     | Yes   | random     | No    |                 |
-
 
 Browser Compatibility
 =====================
@@ -147,13 +97,14 @@ Browser Compatibility
   <li>Most mobile browsers</li>
 </ul>
 
+Flip animations currently don't work in IE or Firefox, this issue will be fixed soon.
+
 
 Limitations
 ===========
 
-Since this uses Digital Fusions' visible plugin to animate elements as they enter the viewport, the same limitations apply to this plugin also, in that it will not check for visibility in nested scrollable areas, only on the main viewport (window object).
 Animations executing on elements entering the viewport will not work if JavaScript is disabled.
-Animations are currently limited to devices with a viewport of 960px (wide) and higher.
+Animations are currently limited to devices with a viewport of 569px (wide) or higher.
 
 
 Author
@@ -166,5 +117,11 @@ http://www.cloud-eight.com
 Credits
 ======
 
-Visible.js, TeamDF, Digital Fusion<br />
-http://www.teamdf.com
+Animate.css, Dan Eden<br />
+https://github.com/daneden/animate.css
+
+CSS3 Animation Cheat Sheet, Justin Aguilar<br />
+http://www.justinaguilar.com/animations/
+
+jquery.appear, bas2k<br />
+https://github.com/bas2k/jquery.appear
