@@ -1,7 +1,7 @@
-Animations v2.0
+Animations v2.1
 ===============
 
-A versatile CSS3 animation pack with over 65 animations for various usages. Trigger CSS3 animations as elements enter the viewport, as you hover with a mouse or by binding them via JavaScript functions/event listeners.
+A versatile CSS3 animation pack with over 190 animations for various usages. Trigger CSS3 animations as elements enter the viewport, as you hover with a mouse or by binding them via JavaScript functions/event listeners.
 
 **Demo:** http://www.cloud-eight.com/github/animations/
 
@@ -21,7 +21,7 @@ Animations
 
 <ul>
   <li>Add the class `animate-in` to the desired element</li>
-  <li>Add the attribute `data-anim-type` with an animation type listed below</li>
+  <li>Add the attribute `data-anim-type` with an animation</li>
   <li>(Optional) Add the attribute `data-anim-delay` if you wish to put a delay (in ms) on the animation</li>
 </ul>
 
@@ -58,20 +58,20 @@ Multiple elements can be targeted by seperating them with a comma.
 
 To animate an element out correctly you can use the `animateOut` function.
 The `animateOut` function needs 2 variables passed through it, the first being the ID/Class of the target element, the second is the type of animation.
-There is the optional 3rd variable to remove the element completely after it has animated.
+There is the optional 3rd variable to remove the element from the DOM completely after it has animated.
 
 ```
 <button onclick="animateOut('#element', 'bounce-out');">Bounce Out</button>
-<button onclick="animateOut('#element', 'bounce-out', true);">Bounce Out and Remove</button>
+<button onclick="animateOut('#element', 'bounce-out', true);">Bounce Out and Remove Element</button>
 ```
 
-To stop an element animation correctly you can use the `animateEnd` function.
+To stop an element animation correctly you can use the `animateEnd` function, for example with animations animating infinitely.
 The `animateEnd` function only needs 1 variable passed through it, the ID/Class of the target element.
 There is the optional 2nd variable to remove the element completely.
 
 ```
 <button onclick="animateEnd('#element');">End</button>
-<button onclick="animateEnd('#element'true);">End and Remove</button>
+<button onclick="animateEnd('#element', true);">End and Remove</button>
 ```
 
 
