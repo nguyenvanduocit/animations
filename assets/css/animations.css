@@ -6981,13 +6981,15 @@
 //	================================================== */
 
 	@-webkit-keyframes heartbeat {
-		0%, 30%, 50%, 60%, 80% { -webkit-transform: scale(1); }
-		40%, 70% { -webkit-transform: scale(1.1); }
+		0%, 30%, 50%, 80% { -webkit-transform: scale(1); }
+    		50%, 70% { -webkit-transform: scale(1.1); }
+    		40%, 60% { -webkit-transform: scale(1.2); }
 	}
 
 	@keyframes heartbeat {
-		0%, 30%, 50%, 60%, 80% { transform: scale(1); }
-		40%, 70% { transform: scale(1.1); }
+		0%, 30%, 50%, 80% { transform: scale(1); }
+    		50%, 70% { transform: scale(1.1); }
+    		40%, 60% { transform: scale(1.2); }
 	}
 
 	.animating.heartbeat,
